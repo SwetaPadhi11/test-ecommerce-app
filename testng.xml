@@ -4,8 +4,10 @@
 <suite name="EcommerceLoginTestSuite">
     <test thread-count="5" name="EcommerceTest">
         <parameter name="browser" value="chrome"/>
+
         <classes>
             <class name="ecommerce.app.testcases.LoginTest001"/>
+            <class name="ecommerce.app.testcases.LoginTest002"/>
         </classes>
     </test>
 </suite>

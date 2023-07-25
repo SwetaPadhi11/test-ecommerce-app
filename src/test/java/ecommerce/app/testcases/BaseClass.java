@@ -1,7 +1,9 @@
 package ecommerce.app.testcases;
 
 import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.ViewName;
 import ecommerce.app.utilities.ReadConfig;
 import lombok.Getter;
 import org.apache.commons.io.FileUtils;
@@ -23,11 +25,12 @@ import java.time.Duration;
 
 
 public class BaseClass {
+
     private static final Logger logger = LoggerFactory.getLogger(BaseClass.class);
 
     @Getter
-    private ExtentReports extent;
-    private ExtentSparkReporter spark;
+    private static ExtentReports extent;
+    private static ExtentSparkReporter spark;
 
     ReadConfig readconfig = new ReadConfig();
     public String baseURL = readconfig.getApplicationURL();
@@ -35,10 +38,15 @@ public class BaseClass {
     public String password = readconfig.getPassword();
     public static WebDriver driver;
 
+    static {
+        logger.info("Instantiating Extent Report...");
+        extent = new ExtentReports();
+        ExtentSparkReporter spark = new ExtentSparkReporter("target/spark.html");
+        extent.attachReporter(spark);
+    }
+
     public BaseClass() {
-        this.extent = new ExtentReports();
-        this.spark = new ExtentSparkReporter("target/Spark.html");
-        this.extent.attachReporter(spark);
+        logger.info("Instantiating Base Class");
     }
 
     @Parameters("browser")
@@ -68,7 +76,7 @@ public class BaseClass {
     public void captureScreen(WebDriver driver, String tname) throws IOException {
         TakesScreenshot ts = (TakesScreenshot) driver;
         File source = ts.getScreenshotAs(OutputType.FILE);
-        File target = new File(System.getProperty("user.dir") + "/Screenshots/" + tname + ".png");
+        File target = new File(System.getProperty("user.dir") + "target/Screenshots/" + tname + ".png");
         FileUtils.copyFile(source, target);
         System.out.println("Screenshot taken");
     }

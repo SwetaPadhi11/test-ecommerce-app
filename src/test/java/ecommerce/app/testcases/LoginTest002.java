@@ -1,7 +1,6 @@
 package ecommerce.app.testcases;
 
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import ecommerce.app.pageObjects.UserLogin;
 import org.slf4j.Logger;
@@ -12,13 +11,12 @@ import java.io.IOException;
 
 import static org.testng.Assert.assertTrue;
 
-public class LoginTest001 extends BaseClass {
-    private static final Logger logger = LoggerFactory.getLogger(LoginTest001.class);
+public class LoginTest002 extends BaseClass {
+    private static final Logger logger = LoggerFactory.getLogger(LoginTest002.class);
 
     @Test
     public void loginTest() throws IOException {
         ExtentTest test = getExtent().createTest("Login using Username and password");
-
         logger.info("URL is opened");
 
         UserLogin lp = new UserLogin(driver);
@@ -31,7 +29,6 @@ public class LoginTest001 extends BaseClass {
         lp.clickSubmit();
 
         if (driver.getTitle().equals("Guru99 Bank Manager HomePage")) {
-            captureScreen(driver, "loginTest");
             assertTrue(true);
             logger.info("Login test passed");
             test.log(Status.PASS, "User login is successful");
